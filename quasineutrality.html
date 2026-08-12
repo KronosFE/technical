@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quasineutrality · Kronos Fusion Energy</title>
+<meta name="description" content="A plasma's tendency to keep equal ion and electron densities over any appreciable scale.">
+<link rel="canonical" href="https://kronosfusionenergy.com/technical/quasineutrality.html">
+<meta property="og:title" content="Quasineutrality">
+<meta property="og:description" content="A plasma's tendency to keep equal ion and electron densities over any appreciable scale.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://kronosfusionenergy.com/technical/quasineutrality.html">
+<meta property="og:site_name" content="Kronos Fusion Energy">
+<meta name="twitter:card" content="summary">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="author" content="Kronos Fusion Energy">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "DefinedTerm", "name": "Quasineutrality", "description": "A plasma's tendency to keep equal ion and electron densities over any appreciable scale.", "url": "https://kronosfusionenergy.com/technical/quasineutrality.html", "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Kronos Fusion Energy Technical Library", "url": "https://kronosfusionenergy.com/technical/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Technical Library", "item": "https://kronosfusionenergy.com/technical/"}, {"@type": "ListItem", "position": 2, "name": "Glossary of Fusion & Plasma Terms", "item": "https://kronosfusionenergy.com/technical/#glossary"}, {"@type": "ListItem", "position": 3, "name": "Quasineutrality", "item": "https://kronosfusionenergy.com/technical/quasineutrality.html"}]}</script>
+<style>
+:root{
+ --bg:#232C39; --text:#E7EBF2; --mut:#8FA0B8; --gold:#D4AD5C; --gold-soft:#E2C57E;
+ --line:rgba(231,235,242,.11); --line2:rgba(231,235,242,.20);
+ --serif:"Newsreader",Charter,"Times New Roman",Georgia,serif;
+ --sans:"Space Grotesk",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+ --mono:"Space Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+font:16.5px/1.72 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--gold);text-decoration:none}
+p a,li a{border-bottom:1px solid rgba(212,173,92,.32)}
+a:hover{color:var(--gold-soft)}p a:hover,li a:hover{border-bottom-color:var(--gold-soft)}
+.wrap{max-width:720px;margin:0 auto;padding:0 24px}
+header.top{border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{font-family:var(--sans);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text);font-size:13px}
+.brand span{color:var(--gold);margin:0 2px}
+nav.top a{font-family:var(--mono);color:var(--mut);margin-left:20px;font-size:12.5px}
+nav.top a:hover{color:var(--gold)}
+.crumb{font-family:var(--mono);color:var(--mut);font-size:12px;letter-spacing:.03em;margin:34px 0 20px}
+.kicker{font-family:var(--mono);color:var(--gold);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.05rem,4.4vw,2.7rem);line-height:1.1;
+letter-spacing:-.016em;margin:.5rem 0 0;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:500;font-size:1.5rem;line-height:1.2;letter-spacing:-.01em;margin:2.5rem 0 .7rem}
+.lede{font-family:var(--serif);font-style:italic;font-size:1.32rem;line-height:1.5;color:#C4CEDC;margin:1.1rem 0 0;text-wrap:pretty}
+p{margin:0 0 1.05rem}
+ul,ol{padding-left:1.15rem}li{margin:.35rem 0}
+strong,b{font-weight:600}
+.kf{margin:1.9rem 0;border-top:1px solid var(--line)}
+.kf .row{display:grid;grid-template-columns:minmax(115px,30%) 1fr;gap:18px;padding:11px 0;border-bottom:1px solid var(--line)}
+.kf dt{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);margin:2px 0 0}
+.kf dd{margin:0;font-size:15px;color:var(--text)}
+.facts{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:14.5px}
+.facts th,.facts td{padding:10px 16px 10px 0;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.facts th{color:var(--gold);font-weight:500;width:38%}
+.gap{margin:1.8rem 0;padding:1px 0 1px 20px;border-left:2px solid var(--gold);color:#C4CEDC;font-size:15px}
+.gap b{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.16em;
+text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.qa{padding:18px 0;border-top:1px solid var(--line)}
+.qa .q{font-family:var(--serif);font-size:1.16rem;line-height:1.35;color:var(--text);margin-bottom:7px}
+.qa .a{color:#C4CEDC}
+.related{margin:3rem 0 0;padding-top:1.5rem;border-top:1px solid var(--line2)}
+.related h3{font-family:var(--mono);margin:0 0 .3rem;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+.related a{display:block;padding:9px 0;color:var(--text);border-bottom:1px solid var(--line)}
+.related a:hover{color:var(--gold)}
+footer{border-top:1px solid var(--line);margin-top:4rem}
+footer .wrap{padding:26px 24px 40px;color:var(--mut);font-size:12.5px;line-height:1.7}
+.lede+.kf{margin-top:2.1rem}
+.hubgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:1px;
+background:var(--line);border:1px solid var(--line);margin:1.1rem 0 2.4rem}
+.card{background:var(--bg);padding:15px 17px}
+.card .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);opacity:.9}
+.card a{display:block;color:var(--text);margin-top:6px;font-size:14.5px;line-height:1.35}
+.card a:hover{color:var(--gold)}
+.seccount{color:var(--mut);font-size:12.5px;font-family:var(--mono);font-weight:400}
+.video{margin:2rem 0}
+.video .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.vframe{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid var(--line)}
+.vframe iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;margin:1.6rem 0 2.6rem}
+.vcard{display:block}
+.vthumb{position:relative;aspect-ratio:16/9;border:1px solid var(--line);overflow:hidden;background:#0e1622}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vplay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.vplay i{width:54px;height:54px;border-radius:50%;background:rgba(20,27,36,.62);border:1px solid var(--gold);
+color:var(--gold);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:17px;padding-left:3px}
+.vcard:hover .vplay i{background:var(--gold);color:#1a222c}
+.vmeta{margin-top:11px}
+.vmeta .vn{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--gold)}
+.vmeta .vt{font-family:var(--serif);font-size:1.04rem;line-height:1.28;color:var(--text);margin-top:3px}
+.vcard:hover .vt{color:var(--gold)}
+.watchbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 2rem;
+padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.watchbar .wl{font-family:var(--serif);font-style:italic;color:#C4CEDC;font-size:1.05rem}
+.watchbar a{font-family:var(--mono);font-size:12px;letter-spacing:.04em;white-space:nowrap}
+@media(max-width:560px){.wrap{padding:0 18px}.kf .row{grid-template-columns:1fr;gap:2px}nav.top a:nth-child(n+4){display:none}}
+</style>
+
+</head><body>
+<header class="top"><div class="wrap">
+<a class="brand" href="https://kronosfusionenergy.com">KRONOS<span>·</span>FUSION</a>
+<nav class="top"><a href="https://kronosfusionenergy.com/technical/">Library</a><a href="https://kronosfusionenergy.com/learn/">Learn</a><a href="https://kronosfusionenergy.com/Physics_Validation_Simulation">Live&nbsp;Sim</a><a href="https://kronosfusionenergy.com/3D_Model">3D&nbsp;Model</a><a href="https://kronosfusionenergy.com/technology">Technology</a></nav>
+</div></header>
+<main class="wrap">
+<div class="crumb"><a href="https://kronosfusionenergy.com/technical/">Technical Library</a> &rsaquo; Glossary of Fusion &amp; Plasma Terms</div>
+<div class="kicker">Glossary</div>
+<h1>Quasineutrality</h1>
+<p class="lede">A plasma's tendency to keep equal ion and electron densities over any appreciable scale.</p>
+
+<p>Beyond the tiny Debye length, a plasma maintains nearly equal positive and negative charge densities; any imbalance sets up strong restoring fields. Quasineutrality underlies the ambipolar physics that plugs the tandem mirror.</p>
+<div class="related"><h3>Related</h3><a href="./debye-length.html">Debye Length &rarr;</a><a href="./ambipolar-potential.html">Ambipolar Potential &rarr;</a><a href="./plasma-frequency.html">Plasma Frequency &rarr;</a></div>
+</main>
+<footer><div class="wrap">Kronos Fusion Energy — compact, low-neutron fusion generators, engineered in the open. A breeder–burner architecture: HYPERION (D–T spherical tokamak) breeds the fuel; the D–&sup3;He tandem-mirror generator burns it as MetroVolt and AEGIS. Every figure is a computed design target from the 2026 pre-publication record, traceable to the open deposits (<a href="https://doi.org/10.5281/zenodo.21746157">breeder</a>, <a href="https://doi.org/10.5281/zenodo.21746479">burner</a>, CC&nbsp;BY&nbsp;4.0). The integrated machines are not yet built — construction of the HYPERION breeder is scheduled to begin in Q2 2027. Partnerships: <a href="https://kronosfusionenergy.com/contact">kronosfusionenergy.com/contact</a>.</div></footer>
+</body></html>
