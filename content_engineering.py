@@ -1,0 +1,92 @@
+# -*- coding: utf-8 -*-
+"""Engineering & subsystems, plus the two design points."""
+
+def register(cat, page, F):
+    cat("engineering", "Engineering & Subsystems",
+        "The subsystems that turn a plasma physics point into a plant — magnets, vessel, "
+        "blanket, divertor, heating, power conversion, cryogenics and controls.", 4)
+
+    page("spherical-tokamak","The Spherical Tokamak (HYPERION)","engineering",
+         f"HYPERION is a compact spherical tokamak — low aspect ratio, high beta, strongly shaped — engineered to breed tritium and neutrons at Q = {F['b_Q']}.",
+         "The breeder is a spherical tokamak because that geometry buys the most plasma pressure per tesla — the key to a compact, economical neutron source.",
+         [('p',f"A spherical tokamak squeezes the hole in the doughnut almost shut, running at low <a href='./aspect-ratio.html'>aspect ratio</a> (A = {F['b_A']}). That geometry naturally supports strong <a href='./elongation.html'>elongation</a> (&kappa; = {F['b_kappa']}) and high <a href='./plasma-beta.html'>beta</a>, so it holds more plasma pressure for a given magnetic field than a conventional tokamak."),
+          ('p',f"HYPERION runs {F['b_Ip']} of plasma current in an {F['b_R0']} major radius machine, with a peak field of {F['b_Bpeak']} and negative triangularity (&delta; = {F['b_delta']}) to tame the plasma edge. Its product is not electricity but neutrons and tritium — the fuel and the driver for the burner economy."),
+          ('facts',[("Aspect ratio",F["b_A"]),("Major radius",F["b_R0"]),("Elongation",F["b_kappa"]),
+                    ("Peak field",F["b_Bpeak"]),("Plasma current",F["b_Ip"]),("Design gain",F["b_Q"])]),
+          ('gap',("Tight central column","Low aspect ratio concentrates load on a slim centre stack — the defining engineering challenge of the spherical tokamak, and a live design focus."))],
+         related=["the-breeder-design-point","aspect-ratio","tandem-mirror","compact-vs-conventional"],
+         jtype="TechArticle")
+
+    page("tandem-mirror","The D–&sup3;He Tandem Mirror (Burner)","engineering",
+         f"The burner is a linear tandem mirror that burns D–&sup3;He at {F['u_Ti']} and converts the result directly to electricity — low-neutron, disruption-free, and modular in length.",
+         "The burner is a straight machine, not a doughnut — and that linearity is a feature: no disruptions, direct conversion, and a length you can scale to the job.",
+         [('p',f"A tandem mirror confines plasma in a straight central cell capped by high-field magnetic plugs at each end. Dense plugs build an <a href='./ambipolar-potential.html'>ambipolar potential</a> that electrostatically confines the central-cell ions. The Kronos burner runs D–&sup3;He at about {F['u_Ti']}, with plug fields reaching {F['u_Bplug']}."),
+          ('p',f"Because most of the energy emerges as charged particles, the burner uses <a href='./direct-energy-conversion.html'>direct energy conversion</a> at about {F['u_dec']} efficiency, quoting an engineering gain of Q<sub>E</sub> = {F['u_QE']} at a neutron fraction of just {F['u_fn']}. The same physics scales across three housings — {F['u_ref_len']}, {F['u_aeg_len']} and {F['u_mv_len']}."),
+          ('facts',[("Fuel","D–&sup3;He"),("Temperature",F["u_Ti"]),("Neutron fraction",F["u_fn"]),
+                    ("Plug field",F["u_Bplug"]),("DEC efficiency",F["u_dec"]),("Engineering gain",F["u_QE"])]),
+          ('gap',("Plug density is the gate",f"Net power requires a plug-to-central density ratio near {F['u_np']}. It is the burner's binding requirement, stated openly."))],
+         related=["the-burner-design-point","ambipolar-potential","direct-energy-conversion","plug-density-requirement"],
+         jtype="TechArticle")
+
+    page("plug-density-requirement","The Plug-Density Requirement","engineering",
+         f"The burner's net power depends on reaching a plug-to-central density ratio near {F['u_np']}. Kronos states this as a requirement, not a result — its most important honest caveat.",
+         "One number gates the burner. Kronos puts it front and centre rather than in a footnote.",
+         [('p',f"In a tandem mirror, the end plugs must reach a density well above the central cell to build an ambipolar potential deep enough to confine the central ions. The Kronos burner's net-positive operation is contingent on a plug-to-central density ratio of about n<sub>p</sub>/n<sub>c</sub> = {F['u_np']}."),
+          ('p',"At a substantially lower ratio, the machine does not close and its engineering gain is not defined. This is why Kronos labels the burner's net power <b>requirement-class</b>: it is a target set by physics, to be demonstrated, not a measured outcome."),
+          ('gap',("How it gets closed","A dedicated plug demonstration is the gating experiment; until it reaches the required ratio, the burner's net power remains a design target."))],
+         facts=[("Requirement","n_p/n_c &asymp; "+F["u_np"]),("Class","Requirement, not result"),
+                ("Gating experiment","Plug demonstration")],
+         related=["tandem-mirror","ambipolar-potential","validation-suite-burner","gate-reviews"],
+         jtype="TechArticle")
+
+    subs = [
+     ("heating-systems","Plasma Heating & Current Drive","How the breeder heats its plasma and sustains its current.",
+      [f"HYPERION heats and drives current with {F['b_Paux']} of auxiliary power via neutral beams and radio-frequency systems. This supplies the non-bootstrap share of the {F['b_Ip']} plasma current and keeps the plasma at its {F['b_Ti']} operating temperature.",
+       "Heating and current-drive efficiency feed directly into the plant power ledger, which is why the auxiliary power is reported explicitly."],
+      [("Auxiliary power",F["b_Paux"]),("Methods","NBI + RF")],
+      ["current-drive","bootstrap-current","spherical-tokamak"]),
+     ("power-conversion","Power Conversion","How each machine turns fusion output into electricity — thermal for the breeder, direct for the burner.",
+      [f"The breeder recovers its energy as heat through a blanket and a thermal cycle. The burner, running low-neutron D–&sup3;He, recovers charged-particle energy directly at about {F['u_dec']} efficiency — skipping the steam cycle's losses entirely.",
+       "The choice of conversion follows the fuel: direct conversion only pays off when most of the energy is in charged particles."],
+      [("Breeder","Thermal cycle"),("Burner","Direct, "+F["u_dec"])],
+      ["direct-energy-conversion","d-he3-fuel","balance-of-plant"]),
+     ("cryogenic-system","The Cryogenic System","Keeping superconducting magnets cold enough to work.",
+      ["High-temperature superconducting magnets still run at cryogenic temperatures; a helium refrigeration plant maintains the cold mass and intercepts heat loads. The cryoplant is a major, conventional balance-of-plant system with well-understood scaling.",
+       "Cryogenics is treated as a ready-for-detailed-design system in the construction-readiness review — a solved problem class rather than an open gate."],
+      [("Role","Magnet cooling"),("Maturity","Conventional big-science scope")],
+      ["superconducting-magnets","balance-of-plant","vacuum-system"]),
+     ("vacuum-system","The Vacuum System","Creating and maintaining the ultra-high vacuum a plasma needs.",
+      ["A fusion plasma must sit inside an ultra-high vacuum so that stray gas does not cool or contaminate it. Cryopumps and roughing systems pump the vessel to a very low base pressure before and during operation.",
+       "The vacuum system is standard high-vacuum engineering scaled up, and is not among the design's binding gates."],
+      [("Role","Ultra-high vacuum"),("Method","Cryopumping")],
+      ["cryogenic-system","balance-of-plant","first-wall"]),
+     ("fuel-cycle","The Tritium Fuel Cycle","Breeding, extracting, and recycling tritium so the plant fuels itself.",
+      [f"A D–T plant must breed, extract, purify and re-inject its own tritium. HYPERION's blanket breeds {F['b_T']} at a breeding ratio of {F['b_TBR']}, against a startup inventory of {F['b_startup']}, while co-producing helium-3 for the burner.",
+       "Tritium handling and accountancy are licensing-relevant systems, treated as a gate item on the breeder side."],
+      [("Breeding ratio",F["b_TBR"]),("Tritium output",F["b_T"]),("Startup inventory",F["b_startup"])],
+      ["tritium-breeding","blanket","dt-fuel"]),
+     ("balance-of-plant","Balance of Plant","The conventional plant systems — cooling, power supplies, controls — that surround the fusion core.",
+      ["Beyond the fusion core sits the balance of plant: heat rejection, electrical distribution, power supplies, instrumentation and controls. Much of this is conventional power-plant and big-science engineering, and Kronos's construction-readiness review classes most of it as ready for detailed design.",
+       "Separating the genuinely novel systems (magnets, plasma, direct conversion) from the conventional balance of plant is part of an honest maturity assessment."],
+      [("Scope","Conventional plant systems"),("Maturity","Mostly ready for detailed design")],
+      ["power-conversion","cryogenic-system","the-path-to-build"]),
+     ("instrumentation-control","Instrumentation, Control & Safety","The sensors, controls and interlocks that run the machine safely.",
+      ["Diagnostics measure the plasma; a control system steers heating, fuelling and magnets; and an independent safety-instrumented system enforces interlocks. Functional-safety standards govern the interlock design.",
+       "Control and safety are treated as detailed-design-ready subsystems whose qualification (SIL verification) is a scheduled, not open-ended, task."],
+      [("Layers","Diagnostics, control, safety interlocks")],
+      ["balance-of-plant","the-path-to-build","gate-reviews"]),
+     ("the-breeder-design-point","The Breeder Design Point","The full HYPERION operating point in one place, every number from the frozen canon.",
+      [f"HYPERION's frozen design point: Q = {F['b_Q']}, fusion power {F['b_Pfus']} ({F['b_Pn']} in neutrons, fraction {F['b_fn']}), plasma current {F['b_Ip']} at bootstrap fraction {F['b_fbs']}, auxiliary power {F['b_Paux']}. Field on axis {F['b_B0']}, peak {F['b_Bpeak']}; R&#8320; {F['b_R0']}, a {F['b_a']}, A {F['b_A']}, &kappa; {F['b_kappa']}, &delta; {F['b_delta']}, q&#8329;&#8325; {F['b_q95']}.",
+       f"Confinement &tau;<sub>E</sub> = {F['b_tauE']} at H<sub>98</sub> = {F['b_H98']}; &beta;<sub>N</sub> = {F['b_bN']}; ion temperature {F['b_Ti']}; Z<sub>eff</sub> {F['b_Zeff']}; first-wall load {F['b_wall']}. Fuel cycle: {F['b_T']} tritium at TBR {F['b_TBR']}, {F['b_He3']} helium-3, startup {F['b_startup']}."],
+      [("Q",F["b_Q"]),("P_fus",F["b_Pfus"]),("I_p",F["b_Ip"]),("Peak field",F["b_Bpeak"]),
+       ("Confinement","H98 "+F["b_H98"]),("Deposit","DOI "+F["doi_b"])],
+      ["spherical-tokamak","validation-suite-breeder","the-burner-design-point"]),
+     ("the-burner-design-point","The Burner Design Point","The full D–&sup3;He burner operating point, across all three product housings.",
+      [f"The burner's frozen point (Mode M): Q<sub>E</sub> = {F['u_QE']}, neutron fraction {F['u_fn']}, ion temperature {F['u_Ti']} (electrons {F['u_Te']}), density {F['u_ne']}, &sup3;He fraction {F['u_x']}, central beta {F['u_beta']}, central-cell radius {F['u_ac']}, DEC efficiency {F['u_dec']}, plug field {F['u_Bplug']} (throat {F['u_Bm']}).",
+       f"The same physics scales in length across three housings: {F['u_ref_len']} &rarr; {F['u_ref_net']} ({F['u_ref_gw']} thermal-class), {F['u_aeg_len']} &rarr; {F['u_aeg_net']} ({F['u_aeg_gw']}), and {F['u_mv_len']} &rarr; {F['u_mv_net']} ({F['u_mv_gw']}) — MetroVolt-scale."],
+      [("Q_E",F["u_QE"]),("Neutron fraction",F["u_fn"]),("Temperature",F["u_Ti"]),
+       ("Plug field",F["u_Bplug"]),("Requirement","n_p/n_c "+F["u_np"]),("Deposit","DOI "+F["doi_u"])],
+      ["tandem-mirror","plug-density-requirement","validation-suite-burner"]),
+    ]
+    for slug,title,desc,paras,facts,rel in subs:
+        page(slug,title,"engineering",desc,desc,[('p',p) for p in paras],facts=facts,related=rel,jtype="TechArticle")

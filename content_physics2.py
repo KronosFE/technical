@@ -1,0 +1,47 @@
+# -*- coding: utf-8 -*-
+"""Physics batch 2 — reactions, plasma behaviour, and machine-specific physics in depth."""
+
+def register(cat, page, F):
+    P = [
+     ("the-dt-reaction","The D–T Reaction in Detail","physics","How deuterium and tritium fuse to helium-4 and a 14 MeV neutron — the breeder's power source.",
+      ["Deuterium and tritium fuse to a helium-4 nucleus and a neutron, sharing 17.6 MeV between them. Conservation of momentum gives the light neutron 14.1 MeV and the helium 3.5 MeV. The neutron carries its energy out to the blanket to breed tritium and deposit heat; the charged helium stays confined and heats the plasma.",
+       f"This split — most energy in the escaping neutron — is why the breeder is neutron-rich ({F['b_fn']}) and why Kronos treats those neutrons as the product, not a nuisance."],
+      [("Products","&sup4;He (3.5 MeV) + n (14.1 MeV)"),("Total","17.6 MeV")],
+      ["dt-fuel","the-neutron-economy","alpha-heating"]),
+     ("the-dhe3-reaction","The D–&sup3;He Reaction in Detail","physics","How deuterium and helium-3 fuse to helium-4 and a proton — all charged, ideal for direct conversion.",
+      [f"Deuterium and helium-3 fuse to a helium-4 nucleus and a proton, releasing 18.3 MeV entirely as charged particles. Because no primary neutron is produced, the energy can be recovered by direct conversion rather than a thermal cycle — the physical basis for the burner's Q<sub>E</sub> = {F['u_QE']}.",
+       f"Side D–D reactions still emit some neutrons, giving the burner its {F['u_fn']} neutron fraction — low, but the reason Kronos says low-neutron, not aneutronic."],
+      [("Products","&sup4;He + p (both charged)"),("Total","18.3 MeV"),("Neutron fraction",F["u_fn"])],
+      ["d-he3-fuel","direct-energy-conversion","is-kronos-fusion-aneutronic"]),
+     ("power-balance","Plasma Power Balance","physics","The accounting of heating in versus losses out that determines whether a plasma produces net power.",
+      [f"A plasma's power balance sums the inputs — auxiliary heating plus any self-heating — against the losses — transport, radiation and exhaust. Steady operation means they balance at the design temperature. HYPERION balances {F['b_Paux']} of heating against its losses to sustain Q = {F['b_Q']}.",
+       "Getting this ledger right, and reporting it honestly at the plant level rather than only the plasma level, is central to the Kronos method."],
+      [("Breeder heating",F["b_Paux"]),("Breeder gain",F["b_Q"])],
+      ["fusion-gain-q","lawson-criterion","bremsstrahlung"]),
+     ("plasma-pressure","Plasma Pressure and Power Density","physics","How much fusion power a machine makes per cubic metre — and why high beta and high field maximise it.",
+      [f"Fusion power density rises with the square of plasma pressure, so holding more pressure in less volume is the route to a compact machine. Pressure is limited by beta (a fraction of magnetic pressure), so both high field and high beta raise power density. HYPERION combines a strong field ({F['b_Bpeak']} peak) with high beta (&beta;<sub>N</sub> = {F['b_bN']}) at low aspect ratio."],
+      [("Peak field",F["b_Bpeak"]),("Beta-N",F["b_bN"])],
+      ["plasma-beta","high-field-magnets","compact-vs-conventional"]),
+     ("centre-column-challenge","The Centre-Column Challenge","physics","Why the slim central column is the defining engineering problem of a spherical tokamak.",
+      [f"A spherical tokamak's low aspect ratio (A = {F['b_A']}) leaves very little room at the machine centre for the toroidal-field conductor, central solenoid, and shielding. Fitting the field, current and neutron protection into that slim column — while carrying huge forces — is the defining engineering challenge Kronos's breeder design confronts head-on.",
+       "It is a real, named focus of the design rather than an afterthought."],
+      [("Aspect ratio",F["b_A"]),("Challenge","Slim, highly-loaded centre column")],
+      ["spherical-tokamak","central-solenoid","toroidal-field-coil"]),
+     ("end-loss-and-plugging","End Loss and Plugging in Mirrors","physics","Why open-ended mirrors leak, and how the tandem-mirror plug fixes it.",
+      [f"A simple magnetic mirror leaks plasma out its open ends. The tandem mirror solves this by placing dense, high-field plugs at each end whose electrostatic (ambipolar) potential repels escaping ions. Building that potential requires the plug to reach a density about {F['u_np']}&times; the central cell — the burner's binding requirement.",
+       "Understanding end loss is understanding both the burner's advantage (no disruptions, direct conversion) and its central gate."],
+      [("Problem","Open-end leakage"),("Solution","Ambipolar plug"),("Requirement","n_p/n_c "+F["u_np"])],
+      ["ambipolar-potential","plug-density-requirement","tandem-mirror"]),
+     ("negative-triangularity","Negative Triangularity in Depth","physics","Why Kronos points the plasma's corners the 'wrong' way — and what it buys.",
+      [f"Conventional D-shaped plasmas use positive triangularity; HYPERION uses negative triangularity (&delta; = {F['b_delta']}). Recent experiments show negative-&delta; plasmas can access good confinement while naturally suppressing edge-localised modes, easing the divertor's life without an active ELM-control system.",
+       "It is a deliberate, physics-based stability choice, not a cosmetic one."],
+      [("Triangularity",F["b_delta"]),("Benefit","ELM suppression + good confinement")],
+      ["triangularity","edge-localized-modes","plasma-shaping"]),
+     ("steady-state-operation","Steady-State Operation","physics","Running continuously rather than in pulses — essential for a power plant, and a design driver.",
+      [f"A power plant must run continuously, which for a tokamak means sustaining the plasma current indefinitely by combining bootstrap self-generation with efficient external current drive. HYPERION's {F['b_fbs']} bootstrap fraction reduces, but does not eliminate, the drive it needs for steady state. The burner, driven continuously by heating, is naturally steady-state.",
+       "Designing for genuine steady state, not just a long pulse, is part of the Kronos approach."],
+      [("Breeder bootstrap",F["b_fbs"]),("Burner","Naturally steady-state")],
+      ["bootstrap-fraction","current-drive","dispatchable-power"]),
+    ]
+    for slug,title,catk,desc,paras,facts,rel in P:
+        page(slug,title,catk,desc,desc,[('p',p) for p in paras],facts=facts,related=rel,jtype="TechArticle")
