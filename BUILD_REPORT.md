@@ -1,15 +1,25 @@
-# Kronos Technical Library — overnight build report
+# Kronos Technical Library — build report
 
-**Built:** 2026-08-11 · **Pages:** 1005 (+ index) · **Categories:** 22 · **Verification: CLEAN**
+**Built:** 2026-08-11 · **Depth pass:** 2026-08-12 · **Pages:** 1005 (+ index) · **Categories:** 22 · **Verification: CLEAN**
 
 A self-contained, on-brand, SEO- and AI-optimized technical knowledge base for
 `kronosfusionenergy.com/technical/`. Every page is grounded in the frozen design canon
 and standard fusion science — nothing invented, nothing padded.
 
+## Depth pass (2026-08-12) — added before final push
+- **FAQ blocks on every substantive article page.** 268 pages now carry a "Common questions"
+  section (2 page-specific Q&A each), up from 54 — every non-glossary, non-FAQ page across all
+  22 categories. This is the single highest-value AI/SEO addition: each renders a **FAQPage**
+  JSON-LD node (311 total on the site) for answer-engine extraction and rich results.
+- **Glossary depth.** ~130 cornerstone glossary terms deepened with a third body paragraph
+  (batches A–F); every glossary term already shipped with two full paragraphs by construction.
+- **Cornerstones deepened** with extra sections + assumptions-vs-demonstrated callouts.
+- All additions hold the frozen canon and honest gates; `verify()` re-checked CLEAN after each batch.
+
 ## What's in the folder
 - `index.html` — master directory (all categories, all pages, page counts)
 - `<slug>.html` — 1005 content pages
-- `sitemap.xml` — 312 URLs for search engines
+- `sitemap.xml` — 1,006 URLs for search engines
 - `llms.txt` — AI-crawler index (every page + one-line description), like your `learn/llms_learn.txt`
 - `_style.css` — shared stylesheet (1:1 with your `learn/` brand)
 - `build_library.py` — the generator (regenerate any time: `python3 build_library.py`)

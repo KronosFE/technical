@@ -77,4 +77,13 @@ padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--li
 .watchbar .wl{font-family:var(--serif);font-style:italic;color:#C4CEDC;font-size:1.05rem}
 .watchbar a{font-family:var(--mono);font-size:12px;letter-spacing:.04em;white-space:nowrap}
 @media(max-width:560px){.wrap{padding:0 18px}.kf .row{grid-template-columns:1fr;gap:2px}nav.top a:nth-child(n+4){display:none}}
+
+.chip{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line2);border-radius:20px;padding:3px 10px}
+.updated{font-family:var(--mono);font-size:10.5px;color:var(--mut)}
+.metaline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:1.1rem 0 .2rem}
+.prevnext{display:flex;justify-content:space-between;gap:16px;margin:2.6rem 0 0;padding-top:1.5rem;border-top:1px solid var(--line2)}
+.prevnext a{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);max-width:47%;border:0}
+.prevnext a:hover{color:var(--gold)}
+.prevnext .nn{display:block;color:var(--text);font-family:var(--serif);font-size:1.02rem;line-height:1.25;margin-top:5px;text-transform:none;letter-spacing:0}
+.prevnext a:hover .nn{color:var(--gold)}
 </style>

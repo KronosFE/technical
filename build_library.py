@@ -37,7 +37,7 @@ F = {
     "doi_b": "10.5281/zenodo.21746157", "doi_b2": "10.5281/zenodo.21795620",
     "doi_u": "10.5281/zenodo.21746479", "doi_rebco": "10.5281/zenodo.21842514",
     "doi_dec": "10.5281/zenodo.21842864", "doi_ai": "10.5281/zenodo.21842371",
-    "patent_granted": "US 12,009,112", "patent_pending": "64/128,097",
+    "patent_granted": "US 12,009,112", "patent_pending": "64/128,097", "build_start": "Q2 2027",
 }
 LIVE_DOIS = {"21746157", "21795620", "21746479", "21842514", "21842864", "21842371"}
 DEAD_DOIS = {"21248916"}
@@ -52,16 +52,8 @@ NAV = ('<nav class="top">'
        f'<a href="{SITE}/3D_Model">3D&nbsp;Model</a>'
        f'<a href="{SITE}/technology">Technology</a></nav>')
 
-FOOTER = ('<footer><div class="wrap">'
-          'Kronos Fusion Energy — compact, low-neutron fusion generators, engineered in the open. '
-          'A breeder–burner architecture: HYPERION (D–T spherical tokamak) breeds the fuel; the D–&sup3;He tandem-mirror '
-          'generator burns it as MetroVolt and AEGIS. Every figure is a computed design target from the 2026 '
-          'pre-publication record, traceable to the open deposits '
-          f'(<a href="https://doi.org/{F["doi_b"]}">breeder</a>, '
-          f'<a href="https://doi.org/{F["doi_u"]}">burner</a>, CC&nbsp;BY&nbsp;4.0). '
-          'The integrated machines are not yet built. '
-          f'Partnerships: <a href="{SITE}/contact">kronosfusionenergy.com/contact</a>.'
-          '</div></footer>')
+FOOTER = ('<footer><div class="wrap">&copy; 2026 Kronos Fusion Energy &middot; '
+          f'<a href="{SITE}">kronosfusionenergy.com</a></div></footer>')
 
 # ---------------------------------------------------------------- PAGE MODEL
 PAGES = {}   # slug -> spec
@@ -71,12 +63,20 @@ def cat(key, title, blurb, order):
     CATS[key] = {"title": title, "blurb": blurb, "order": order}
 
 def page(slug, title, catkey, desc, lede, body, facts=None, related=None,
-         jtype="Article", kicker=None):
+         jtype="Article", kicker=None, faq=None):
     if slug in PAGES:
         raise SystemExit("DUPLICATE SLUG: " + slug)
     PAGES[slug] = dict(slug=slug, title=title, cat=catkey, desc=desc, lede=lede,
                        body=body, facts=facts or [], related=related or [],
-                       jtype=jtype, kicker=kicker or CATS.get(catkey, {}).get("title", "Technical"))
+                       jtype=jtype, kicker=kicker or CATS.get(catkey, {}).get("title", "Technical"),
+                       faq=faq or [])
+
+def enrich(slug, add_body=None, faq=None, add_facts=None):
+    if slug not in PAGES:
+        print('enrich: MISSING', slug); return
+    if add_body: PAGES[slug]['body'] = PAGES[slug]['body'] + add_body
+    if add_facts: PAGES[slug]['facts'] = PAGES[slug]['facts'] + add_facts
+    if faq: PAGES[slug].setdefault('faq', []).extend(faq)
 
 def esc(s): return html.escape(str(s), quote=False)
 
@@ -101,30 +101,97 @@ def render_body(elems):
         elif t == 'html': out.append(e[1])
     return "\n".join(out)
 
+def keywords(spec):
+    base = [re.sub(r"\s*\(.*?\)","",spec["title"]).strip(), CATS.get(spec['cat'],{}).get('title','')]
+    base += [PAGES[r]["title"] for r in spec["related"] if r in PAGES]
+    base += ["fusion energy","Kronos Fusion Energy","nuclear fusion","fusion reactor"]
+    seen=[]
+    for k in base:
+        k=re.sub(r"\s*\(.*?\)","",k).strip()
+        if k and k.lower() not in [s.lower() for s in seen]: seen.append(k)
+    return ", ".join(seen[:14])
+
+ORG = {"@type":"Organization","@id":SITE+"/#org","name":"Kronos Fusion Energy","url":SITE,
+       "description":"Compact, low-neutron fusion generators — a breeder-burner architecture (HYPERION breeder; D-3He tandem-mirror burner).",
+       "sameAs":["https://zenodo.org/communities/kronos_fusion_energy",
+                 "https://doi.org/"+F["doi_b"],"https://doi.org/"+F["doi_u"],
+                 "https://doi.org/"+F["doi_rebco"],"https://doi.org/"+F["doi_dec"],
+                 "https://doi.org/"+F["doi_ai"]]}
+WEBSITE = {"@type":"WebSite","@id":SITE+BASE+"/#site","name":"Kronos Fusion Energy — Technical Library",
+           "url":SITE+BASE+"/","publisher":{"@id":SITE+"/#org"},"inLanguage":"en"}
+
 def jsonld(spec):
     url = f"{SITE}{BASE}/{spec['slug']}.html"
-    if spec["jtype"] == "DefinedTerm":
-        d = {"@context":"https://schema.org","@type":"DefinedTerm","name":spec["title"],
-             "description":spec["desc"],"url":url,
-             "inDefinedTermSet":{"@type":"DefinedTermSet","name":"Kronos Fusion Energy Technical Library","url":f"{SITE}{BASE}/"}}
-    elif spec["jtype"] == "FAQPage":
-        qa = [x for el in spec["body"] if el[0]=="qa" for x in el[1]]
-        d = {"@context":"https://schema.org","@type":"FAQPage","url":url,
-             "mainEntity":[{"@type":"Question","name":q,
-                            "acceptedAnswer":{"@type":"Answer","text":re.sub('<[^>]+>','',a)}} for q,a in qa]}
+    common = {"url":url,"name":spec["title"],"description":spec["desc"],
+              "isPartOf":{"@id":SITE+BASE+"/#site"},"publisher":{"@id":SITE+"/#org"},
+              "keywords":keywords(spec),"inLanguage":"en",
+              "speakable":{"@type":"SpeakableSpecification","cssSelector":["h1",".lede"]}}
+    if spec["jtype"]=="DefinedTerm":
+        node={"@type":"DefinedTerm","@id":url+"#term",**common,
+              "inDefinedTermSet":{"@type":"DefinedTermSet","name":"Kronos Fusion Energy Technical Library","url":SITE+BASE+"/"}}
+    elif spec["jtype"]=="FAQPage":
+        qa=[x for el in spec["body"] if el[0]=="qa" for x in el[1]]
+        node={"@type":"FAQPage","@id":url+"#faq",**common,
+              "mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":re.sub('<[^>]+>','',a)}} for q,a in qa]}
     else:
-        d = {"@context":"https://schema.org","@type":"TechArticle","headline":spec["title"],
-             "description":spec["desc"],"url":url,
-             "datePublished":BUILD_DATE,"dateModified":BUILD_DATE,
-             "publisher":{"@type":"Organization","name":"Kronos Fusion Energy","url":SITE},
-             "isPartOf":{"@type":"CreativeWork","name":"Kronos Fusion Energy Technical Library","url":f"{SITE}{BASE}/"}}
-    return json.dumps(d, ensure_ascii=False)
+        node={"@type":"TechArticle","@id":url+"#article",**common,"headline":spec["title"],
+              "datePublished":BUILD_DATE,"dateModified":BUILD_DATE,
+              "author":{"@id":SITE+"/#org"},"mainEntityOfPage":url}
+    crumb={"@type":"BreadcrumbList","itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Technical Library","item":SITE+BASE+"/"},
+        {"@type":"ListItem","position":2,"name":CATS.get(spec['cat'],{}).get('title','Technical'),"item":SITE+BASE+"/#"+spec['cat']},
+        {"@type":"ListItem","position":3,"name":spec["title"],"item":url}]}
+    graph=[ORG,WEBSITE,node,crumb]
+    if spec.get("faq") and spec["jtype"]!="FAQPage":
+        graph.append({"@type":"FAQPage","@id":url+"#faq","isPartOf":{"@id":SITE+BASE+"/#site"},
+            "mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":re.sub(chr(60)+"[^"+chr(62)+"]+"+chr(62),"",a)}} for q,a in spec["faq"]]})
+    return json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False)
 
-def breadcrumb_ld(spec):
-    return json.dumps({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
-        {"@type":"ListItem","position":1,"name":"Technical Library","item":f"{SITE}{BASE}/"},
-        {"@type":"ListItem","position":2,"name":CATS.get(spec['cat'],{}).get('title','Technical'),"item":f"{SITE}{BASE}/#"+spec['cat']},
-        {"@type":"ListItem","position":3,"name":spec["title"],"item":f"{SITE}{BASE}/{spec['slug']}.html"}]}, ensure_ascii=False)
+# ---- auto internal linking (single combined regex, one pass per page) ----
+_PHR2SLUG=None; _LINKRE=None
+def _build_linker():
+    global _PHR2SLUG,_LINKRE
+    if _LINKRE is not None: return
+    _PHR2SLUG={}
+    phrases=[]
+    for slug in PAGES:
+        phrase=slug.replace("-"," ")
+        if len(phrase)>=5 and not phrase.startswith("the "):
+            _PHR2SLUG[phrase]=slug; phrases.append(phrase)
+    phrases.sort(key=len, reverse=True)
+    alt="|".join(re.escape(p) for p in phrases)
+    _LINKRE=re.compile(r"(?<![\w-])("+alt+r")(?![\w-])", re.I)
+
+def autolink(htmlstr, self_slug, already):
+    _build_linker()
+    linked=set(already); linked.add(self_slug); cap=[14]; in_a=0; res=[]
+    for part in re.split(r"(<[^>]+>)", htmlstr):
+        if part.startswith("<"):
+            tl=part.lower()
+            if tl.startswith("<a"): in_a+=1
+            elif tl.startswith("</a"): in_a=max(0,in_a-1)
+            res.append(part); continue
+        if in_a>0 or cap[0]<=0 or not part.strip():
+            res.append(part); continue
+        out=""; last=0
+        for m in _LINKRE.finditer(part):
+            if cap[0]<=0: break
+            slug=_PHR2SLUG.get(m.group(1).lower())
+            if not slug or slug in linked: continue
+            out+=part[last:m.start(1)]+f'<a href="./{slug}.html">'+m.group(1)+"</a>"
+            last=m.end(1); linked.add(slug); cap[0]-=1
+        res.append(out+part[last:])
+    return "".join(res)
+
+_CATSEQ=None
+def _catseq(cat):
+    global _CATSEQ
+    if _CATSEQ is None:
+        _CATSEQ={}
+        for ck in CATS:
+            _CATSEQ[ck]=sorted([p["slug"] for p in PAGES.values() if p["cat"]==ck],
+                               key=lambda s: PAGES[s]["title"].lower())
+    return _CATSEQ.get(cat,[])
 
 def render_page(spec):
     url = f"{SITE}{BASE}/{spec['slug']}.html"
@@ -132,6 +199,13 @@ def render_page(spec):
     if spec["facts"]:
         rows = "".join(f'<div class="row"><dt>{esc(k)}</dt><dd>{v}</dd></div>' for k,v in spec["facts"])
         facts = f'<dl class="kf">{rows}</dl>'
+    body_html = render_body(spec['body'])
+    already = set(re.findall(r'href="\./([a-z0-9-]+)\.html"', body_html))
+    body_html = autolink(body_html, spec['slug'], already)
+    faqhtml = ""
+    if spec.get("faq"):
+        qas = "".join(f'<div class="qa"><div class="q">{esc(q)}</div><div class="a">{a}</div></div>' for q,a in spec["faq"])
+        faqhtml = f'<h2>Common questions</h2>{qas}'
     related = ""
     if spec["related"]:
         links = []
@@ -139,6 +213,13 @@ def render_page(spec):
             tt = PAGES[r]["title"] if r in PAGES else r.replace("-"," ").title()
             links.append(f'<a href="./{r}.html">{esc(tt)} &rarr;</a>')
         related = f'<div class="related"><h3>Related</h3>{"".join(links)}</div>'
+    seq = _catseq(spec['cat']); idx = seq.index(spec['slug']) if spec['slug'] in seq else -1
+    pv = '<span></span>'; nx = ''
+    if idx > 0:
+        p = PAGES[seq[idx-1]]; pv = f'<a href="./{p["slug"]}.html">&larr; Previous<span class="nn">{esc(p["title"])}</span></a>'
+    if 0 <= idx < len(seq)-1:
+        p = PAGES[seq[idx+1]]; nx = f'<a href="./{p["slug"]}.html" style="text-align:right;margin-left:auto">Next &rarr;<span class="nn">{esc(p["title"])}</span></a>'
+    prevnext = f'<div class="prevnext">{pv}{nx}</div>' if (idx>=0 and len(seq)>1) else ""
     catt = CATS.get(spec['cat'], {}).get('title', 'Technical')
     return f"""<!doctype html>
 <html lang="en"><head>
@@ -146,18 +227,24 @@ def render_page(spec):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(spec['title'])} · Kronos Fusion Energy</title>
 <meta name="description" content="{esc(spec['desc'])}">
+<meta name="keywords" content="{esc(keywords(spec))}">
 <link rel="canonical" href="{url}">
 <meta property="og:title" content="{esc(spec['title'])}">
 <meta property="og:description" content="{esc(spec['desc'])}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{url}">
 <meta property="og:site_name" content="Kronos Fusion Energy">
+<meta property="article:published_time" content="{BUILD_DATE}">
+<meta property="article:modified_time" content="{BUILD_DATE}">
+<meta property="article:publisher" content="{SITE}">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{esc(spec['title'])}">
+<meta name="twitter:description" content="{esc(spec['desc'])}">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <meta name="author" content="Kronos Fusion Energy">
+<link rel="alternate" type="text/plain" title="AI index (llms.txt)" href="{SITE}{BASE}/llms.txt">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">{jsonld(spec)}</script>
-<script type="application/ld+json">{breadcrumb_ld(spec)}</script>
 {CSS}
 </head><body>
 <header class="top"><div class="wrap">
@@ -165,13 +252,16 @@ def render_page(spec):
 {NAV}
 </div></header>
 <main class="wrap">
-<div class="crumb"><a href="{SITE}{BASE}/">Technical Library</a> &rsaquo; {esc(catt)}</div>
+<div class="crumb"><a href="{SITE}{BASE}/">Technical Library</a> &rsaquo; <a href="{SITE}{BASE}/#{spec['cat']}">{esc(catt)}</a></div>
 <div class="kicker">{esc(spec['kicker'])}</div>
 <h1>{esc(spec['title'])}</h1>
 <p class="lede">{spec['lede']}</p>
+<div class="metaline"><span class="chip">{esc(catt)}</span><span class="updated">Updated {BUILD_DATE}</span></div>
 {facts}
-{render_body(spec['body'])}
+{body_html}
+{faqhtml}
 {related}
+{prevnext}
 </main>
 {FOOTER}
 </body></html>"""
@@ -182,7 +272,11 @@ def build_content():
     import glob, importlib
     mods = sorted(os.path.basename(f)[:-3] for f in glob.glob(os.path.join(HERE,"content_*.py")))
     for name in mods:
-        importlib.import_module(name).register(cat, page, F)
+        mod=importlib.import_module(name)
+        try:
+            mod.register(cat, page, F, enrich)
+        except TypeError:
+            mod.register(cat, page, F)
 
 # ---------------------------------------------------------------- INDEX / SITEMAP / LLMS
 def build_index():
@@ -241,7 +335,7 @@ def build_llms():
     cats_sorted = sorted(CATS.items(), key=lambda kv: kv[1]["order"])
     lines = ["# Kronos Fusion Energy — Technical Library",
              "",
-             f"> Open technical knowledge base ({len(PAGES)} pages) on the physics, validation, engineering, materials, methodology and open-science record behind Kronos Fusion Energy's breeder-burner fusion architecture. Breeder = HYPERION, a D-T spherical tokamak (Q {F['b_Q']}, {F['b_Pfus']}). Burner = a D-3He tandem-mirror generator (MetroVolt, AEGIS). Every figure is a computed design target traceable to open Zenodo deposits (CC BY 4.0). The integrated machines are not yet built.",
+             f"> Open technical knowledge base ({len(PAGES)} pages) on the physics, validation, engineering, materials, methodology and open-science record behind Kronos Fusion Energy's breeder-burner fusion architecture. Breeder = HYPERION, a D-T spherical tokamak (Q {F['b_Q']}, {F['b_Pfus']}). Burner = a D-3He tandem-mirror generator (MetroVolt, AEGIS). Every figure is a computed design target traceable to open Zenodo deposits (CC BY 4.0). The integrated machines are not yet built; construction of the HYPERION breeder is scheduled to begin in Q2 2027.",
              ""]
     for ck, cinfo in cats_sorted:
         items = [p for p in PAGES.values() if p["cat"] == ck]
