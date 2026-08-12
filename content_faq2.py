@@ -20,7 +20,7 @@ def register(cat, page, F):
       ["honesty-framework","reproducibility-overview","what-are-the-open-questions"]),
      ("is-the-3d-model-real","Is the interactive 3D model a real machine?",
       "It is a physics-grounded design instrument, not a mirror of operating hardware — and it says so.",
-      [f"The model is a schematic, physics-grounded design tool: a rotatable reactor, an in-browser solver, and the full frozen design point (breeder Q = {F['b_Q']}, burner Q<sub>E</sub> = {F['u_QE']}). It is stage one of a model &rarr; shadow &rarr; digital-twin progression — a design instrument, not a live twin of a machine that does not yet exist.",
+      [f"The model is a schematic, physics-grounded design tool: a rotatable reactor, an in-browser solver, and the full frozen design point (breeder Q = {F['b_Q']}, burner Q<sub>E</sub> = {F['u_QE']}). It is stage one of a model &rarr; shadow &rarr; digital-twin progression — a design instrument, not a live twin of a machine that does not yet exist (construction of the HYPERION breeder is scheduled to begin in Q2 2027).",
        "Kronos labels it as schematic rather than letting its polish imply as-built hardware."],
       ["the-3d-model","model-shadow-twin","has-kronos-built-a-reactor"]),
      ("why-a-breeder-if-it-loses-money","Why build the breeder if electricity is not its product?",

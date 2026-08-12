@@ -38,7 +38,7 @@ def register(cat, page, F):
       "Progress at Kronos is gated on evidence, not enthusiasm. G1 through G4 are the checkpoints.",
       [('p',"The programme is structured around gate reviews: G1 (physics design freeze), then successive gates for component demonstration, an integrated prototype, and a first product. Each gate has explicit criteria that must be met before the next phase begins."),
        ('p',"The binding gate criteria are the design's largest open items — confinement assumptions on the breeder side, and the plug-density requirement on the burner side. Naming them as gates keeps the roadmap honest."),
-       ('gap',("Where we are","G1, the physics design freeze, is complete. The gates ahead are demonstration-driven and are described as targets, not achievements."))],
+       ('gap',("Where we are","G1, the physics design freeze, is complete, and construction of the HYPERION breeder is scheduled to begin in Q2 2027. The gates ahead of that are demonstration-driven and described as targets, not achievements."))],
       [("G1","Physics design freeze — done"),("Binding gates","Confinement; plug density")],
       ["the-freeze-discipline","plug-density-requirement","the-path-to-build"]),
      ("model-shadow-twin","From Model to Shadow to Digital Twin","How the public interactive model is designed to evolve into a live digital twin once hardware exists.",

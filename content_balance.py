@@ -68,7 +68,7 @@ def register(cat, page, F):
         ["reduced-order-modeling","the-path-to-build","materials-qualification"])
     art("what-reproducibility-proves","What Reproducibility Does and Doesn't Prove","validation",
         "Reproducing a computation proves it follows from the model and inputs — not that the unbuilt machine will behave that way.",
-        ["An honest account of the limits of reproducibility: re-running a Kronos deposit proves the published number follows rigorously from the stated model and inputs. It does not, by itself, prove that a machine — which does not yet exist — will match the model. Kronos states both halves of that clearly.",
+        ["An honest account of the limits of reproducibility: re-running a Kronos deposit proves the published number follows rigorously from the stated model and inputs. It does not, by itself, prove that a machine — not yet operating, though the HYPERION breeder is scheduled to begin construction in Q2 2027 — will match the model. Kronos states both halves of that clearly.",
          "This is why every figure is labelled a computed design target, and why the binding gates are named separately."],
         None,
         ["reproducibility-overview","tier-1-tier-2","has-kronos-built-a-reactor"],

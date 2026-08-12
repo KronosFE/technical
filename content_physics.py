@@ -17,7 +17,7 @@ def register(cat, page, F):
                   "<b>Confinement time</b> — the plasma's heat must be held long enough to sustain the reactions rather than leaking away."]),
           ('h2', "How Kronos approaches it"),
           ('p', "Kronos runs a two-machine strategy. The <a href=\"./spherical-tokamak.html\">HYPERION breeder</a> is a compact spherical tokamak that produces neutrons and breeds tritium; the <a href=\"./tandem-mirror.html\">D–&sup3;He tandem-mirror burner</a> converts a fuel that is far cleaner in neutrons directly into electricity. Neither machine claims ignition — both are honestly described as <a href=\"./ignition-vs-driven.html\">driven systems</a>."),
-          ('gap', ("Honest framing", "Kronos publishes computed design targets, not measured results — the integrated machines are not yet built. Every number on this page traces to an open, reproducible deposit.")),
+          ('gap', ("Honest framing", "Kronos publishes computed design targets, not measured results — the integrated machines are not yet built, though construction of the HYPERION breeder is scheduled to begin in Q2 2027. Every number on this page traces to an open, reproducible deposit.")),
           ],
          facts=[("Breeder gain Q", F["b_Q"]), ("Breeder fusion power", F["b_Pfus"]),
                 ("Burner neutron fraction", F["u_fn"]+" (low-neutron)"), ("Status", "Design & simulation study")],

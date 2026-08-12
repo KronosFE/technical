@@ -15,7 +15,7 @@ def register(cat, page, F):
                  "<b>Tier&nbsp;2 — tolerance.</b> Calculations with legitimate numerical variation reproduce within a stated tolerance."]),
           ('facts',[("Breeder validation checks",F["b_checks"]),("Burner validation checks",F["u_checks"]),
                     ("Breeder deposit","DOI "+F["doi_b"]),("Burner deposit","DOI "+F["doi_u"])]),
-          ('gap',("What reproducibility does and does not prove","Reproducing a computation proves the result follows from the stated model and inputs. It does not prove the model matches a machine that does not yet exist — which is why Kronos labels its figures computed design targets."))],
+          ('gap',("What reproducibility does and does not prove","Reproducing a computation proves the result follows from the stated model and inputs. It does not prove the model matches a machine not yet operating (the HYPERION breeder is scheduled to begin construction in Q2 2027) — which is why Kronos labels its figures computed design targets."))],
          related=["tier-1-tier-2","validation-suite-breeder","validation-suite-burner","how-to-reproduce"],
          jtype="TechArticle")
 
