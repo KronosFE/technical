@@ -1,6 +1,6 @@
 # Kronos Fusion Energy — Technical Library
 
-> Open technical knowledge base (1005 pages) on the physics, validation, engineering, materials, methodology and open-science record behind Kronos Fusion Energy's breeder-burner fusion architecture. Breeder = HYPERION, a D-T spherical tokamak (Q 3.424, 88.7 MW). Burner = a D-3He tandem-mirror generator (MetroVolt, AEGIS). Every figure is a computed design target traceable to open Zenodo deposits (CC BY 4.0). The integrated machines are not yet built.
+> Open technical knowledge base (1005 pages) on the physics, validation, engineering, materials, methodology and open-science record behind Kronos Fusion Energy's breeder-burner fusion architecture. Breeder = HYPERION, a D-T spherical tokamak (Q 3.424, 88.7 MW). Burner = a D-3He tandem-mirror generator (MetroVolt, AEGIS). Every figure is a computed design target traceable to open Zenodo deposits (CC BY 4.0). The integrated machines are not yet built; construction of the HYPERION breeder is scheduled to begin in Q2 2027.
 
 ## Physics & Fusion Science
 - [Ambipolar Confinement Physics](https://kronosfusionenergy.com/technical/ambipolar-physics.html): How an electrostatic potential confines a tandem mirror's ions.
@@ -936,7 +936,7 @@
 - [Does Kronos need helium-3 from the Moon?](https://kronosfusionenergy.com/technical/does-kronos-need-lunar-helium3.html): No — the breeder makes its own helium-3; lunar sourcing is a long-term option, not a dependency.
 - [Does fusion depend on rare materials?](https://kronosfusionenergy.com/technical/does-fusion-use-rare-materials.html): The fuels are abundant; the notable scarce input is helium-3, which the breeder makes itself.
 - [Does fusion produce radioactive waste?](https://kronosfusionenergy.com/technical/does-fusion-produce-waste.html): No long-lived high-level waste — only activated structure, kept short-lived by material choice.
-- [Has Kronos built a reactor?](https://kronosfusionenergy.com/technical/has-kronos-built-a-reactor.html): No. Kronos is a design-and-simulation study; the integrated machines are not yet built.
+- [Has Kronos built a reactor?](https://kronosfusionenergy.com/technical/has-kronos-built-a-reactor.html): Not yet — but construction of the HYPERION breeder is scheduled to begin in Q2 2027; today Kronos is a design-and-simulation study.
 - [How big is a Kronos machine?](https://kronosfusionenergy.com/technical/how-big-is-a-kronos-plant.html): The breeder is compact (~1.2 m major radius); the burner scales in length from 55 to 1400 m by product.
 - [How do we know the Kronos numbers are real?](https://kronosfusionenergy.com/technical/how-do-we-know-the-numbers-are-real.html): Because you can download the engines and reproduce them yourself.
 - [How does Kronos create value before net electricity?](https://kronosfusionenergy.com/technical/how-does-kronos-make-money-before-electricity.html): By selling the breeder's products — tritium, neutrons, isotopes and helium-3.
